@@ -240,48 +240,11 @@ document.querySelectorAll('.product-card').forEach(card => {
 
 /* ============================================================
    KAVRI EXIM STYLE COMPREHENSIVE RFQ SYSTEM & SEAPORT ENGINE
+   Exact Data Extraction from KavriExim.com (Gt & Bt Catalog)
    ============================================================ */
 
-// 1. Destination Country to Exact Discharge Seaport UN/LOCODE Directory (Kavri Exim Global Ports Reference)
+// 1. Destination Country to Exact Discharge Seaport UN/LOCODE Directory (Exact Kavri Exim Reference)
 const DESTINATION_PORTS = {
-  "UAE": [
-    "Jebel Ali Port, Dubai (AEJEA)",
-    "Khalifa Port, Abu Dhabi (AEKHL)",
-    "Port Khalid, Sharjah (AEPKH)",
-    "Fujairah Port (AEFJR)",
-    "Ajman Port (AEAJM)",
-    "Others (Specify Port)"
-  ],
-  "Saudi Arabia": [
-    "Jeddah Islamic Port (SAJED)",
-    "King Abdulaziz Port, Dammam (SADMM)",
-    "King Abdullah Port, Rabigh (SAKAP)",
-    "Jubail Commercial Port (SAJUB)",
-    "Yanbu Commercial Port (SAYNB)",
-    "Others (Specify Port)"
-  ],
-  "Qatar": [
-    "Hamad Port, Doha (QAHMD)",
-    "Ras Laffan (QARLF)",
-    "Mesaieed (QAMSD)",
-    "Others (Specify Port)"
-  ],
-  "Oman": [
-    "Port of Sohar (OMSOH)",
-    "Port of Salalah (OMSLL)",
-    "Port Sultan Qaboos, Muscat (OMMSQ)",
-    "Others (Specify Port)"
-  ],
-  "Kuwait": [
-    "Shuwaikh Port (KWSHU)",
-    "Shuaiba Port (KWSAA)",
-    "Others (Specify Port)"
-  ],
-  "Bahrain": [
-    "Khalifa Bin Salman Port (BHKBS)",
-    "Mina Salman (BHMIN)",
-    "Others (Specify Port)"
-  ],
   "USA": [
     "New York / New Jersey (USNYC)",
     "Los Angeles / Long Beach (USLAX / USLGB)",
@@ -292,7 +255,7 @@ const DESTINATION_PORTS = {
     "Norfolk / Hampton Roads, Virginia (USORF)",
     "Oakland, California (USOAK)",
     "Charleston, South Carolina (USCHS)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "UK": [
     "Port of Felixstowe (GBFXT)",
@@ -300,81 +263,20 @@ const DESTINATION_PORTS = {
     "London Gateway / Tilbury (GBLON)",
     "Liverpool (GBLIV)",
     "Immingham (GBIMM)",
-    "Others (Specify Port)"
+    "Others"
   ],
-  "Germany": [
-    "Port of Hamburg (DEHAM)",
-    "Bremerhaven (DEBRV)",
-    "Wilhelmshaven (JadeWeserPort) (DEWVN)",
-    "Duisburg (Inland Marine Hub) (DEDUI)",
-    "Others (Specify Port)"
-  ],
-  "Netherlands": [
-    "Port of Rotterdam (NLRTM)",
-    "Port of Amsterdam (NLAMS)",
-    "Moerdijk (NLMOE)",
-    "Others (Specify Port)"
-  ],
-  "Belgium": [
-    "Port of Antwerp-Bruges (BEANR)",
-    "Port of Zeebrugge (BEZEE)",
-    "Ghent (BEGNE)",
-    "Others (Specify Port)"
-  ],
-  "France": [
-    "Port of Le Havre (FRLEH)",
-    "Marseille / Fos-sur-Mer (FRFOS)",
-    "Dunkirk (FRDKK)",
-    "Others (Specify Port)"
-  ],
-  "Italy": [
-    "Port of Genoa (ITGOA)",
-    "Gioia Tauro (ITGIT)",
-    "La Spezia (ITSPE)",
-    "Trieste (ITTRS)",
-    "Livorno (ITLIV)",
-    "Others (Specify Port)"
-  ],
-  "Spain": [
-    "Port of Valencia (ESVLC)",
-    "Port of Algeciras (ESALG)",
-    "Port of Barcelona (ESBCN)",
-    "Bilbao (ESBIO)",
-    "Others (Specify Port)"
-  ],
-  "Turkey": [
-    "Mersin International Port (TRMER)",
-    "Istanbul / Ambarli (TRIST)",
-    "Izmir Port (TRIZM)",
-    "Gebze / Evyap (TREVY)",
-    "Others (Specify Port)"
-  ],
-  "Canada": [
-    "Port of Vancouver, BC (CAVAN)",
-    "Port of Montreal, QC (CAMTR)",
-    "Prince Rupert, BC (CAPRR)",
-    "Halifax Port, NS (CAHAL)",
-    "Toronto (Inland Marine Terminal) (CATOR)",
-    "Others (Specify Port)"
-  ],
-  "Australia": [
-    "Port of Melbourne (AUMEL)",
-    "Port Botany, Sydney (AUSYD)",
-    "Port of Brisbane (AUBNE)",
-    "Fremantle Port, Perth (AUFRE)",
-    "Adelaide (AUADL)",
-    "Others (Specify Port)"
-  ],
-  "New Zealand": [
-    "Port of Auckland (NZAKL)",
-    "Port of Tauranga (NZTRG)",
-    "Lyttelton / Christchurch (NZLYT)",
-    "Others (Specify Port)"
+  "UAE": [
+    "Jebel Ali Port, Dubai (AEJEA)",
+    "Khalifa Port, Abu Dhabi (AEKHL)",
+    "Port Khalid, Sharjah (AEPKH)",
+    "Fujairah Port (AEFJR)",
+    "Ajman Port (AEAJM)",
+    "Others"
   ],
   "Singapore": [
     "Port of Singapore (PSA) (SGSIN)",
     "Jurong Port (SGJUR)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "Malaysia": [
     "Port Klang (Westport / Northport) (MYPKG)",
@@ -382,43 +284,13 @@ const DESTINATION_PORTS = {
     "Penang Port (MYPEN)",
     "Pasir Gudang, Johor (MYPGU)",
     "Kuantan Port (MYKUA)",
-    "Others (Specify Port)"
+    "Others"
   ],
-  "Indonesia": [
-    "Tanjung Priok, Jakarta (IDTPP)",
-    "Tanjung Perak, Surabaya (IDTPS)",
-    "Belawan Port, Medan (IDBLW)",
-    "Tanjung Emas, Semarang (IDSRG)",
-    "Makassar (Soekarno-Hatta) (IDMAK)",
-    "Others (Specify Port)"
-  ],
-  "Thailand": [
-    "Laem Chabang Port (THLCH)",
-    "Bangkok Port (THBKK)",
-    "Map Ta Phut (THMAT)",
-    "Others (Specify Port)"
-  ],
-  "Vietnam": [
-    "Cat Lai / Ho Chi Minh City (VNSGN)",
-    "Cai Mep International Terminal (VNCMT)",
-    "Hai Phong (VNHPH)",
-    "Da Nang (VNDAD)",
-    "Others (Specify Port)"
-  ],
-  "Japan": [
-    "Tokyo Port (JPTYO)",
-    "Yokohama (JPYOK)",
-    "Kobe Port (JPUKB)",
-    "Osaka Port (JPOSA)",
-    "Nagoya Port (JPNGO)",
-    "Others (Specify Port)"
-  ],
-  "South Korea": [
-    "Busan Port (KRPUS)",
-    "Incheon Port (KRINC)",
-    "Gwangyang (KRKAN)",
-    "Pyeongtaek (KRPTK)",
-    "Others (Specify Port)"
+  "Sri Lanka": [
+    "Colombo Port (LKCMB)",
+    "Hambantota International Port (LKHRI)",
+    "Trincomalee Port (LKTRR)",
+    "Others"
   ],
   "China": [
     "Shanghai Port (CNSHA)",
@@ -429,176 +301,302 @@ const DESTINATION_PORTS = {
     "Tianjin / Xingang (CNTSN)",
     "Xiamen Port (CNXMN)",
     "Dalian Port (CNDLC)",
-    "Others (Specify Port)"
+    "Others"
   ],
-  "Sri Lanka": [
-    "Colombo Port (LKCMB)",
-    "Hambantota International Port (LKHRI)",
-    "Trincomalee Port (LKTRR)",
-    "Others (Specify Port)"
+  "Saudi Arabia": [
+    "Jeddah Islamic Port (SAJED)",
+    "King Abdulaziz Port, Dammam (SADMM)",
+    "King Abdullah Port, Rabigh (SAKAP)",
+    "Jubail Commercial Port (SAJUB)",
+    "Yanbu Commercial Port (SAYNB)",
+    "Others"
+  ],
+  "Indonesia": [
+    "Tanjung Priok, Jakarta (IDTPP)",
+    "Tanjung Perak, Surabaya (IDTPS)",
+    "Belawan Port, Medan (IDBLW)",
+    "Tanjung Emas, Semarang (IDSRG)",
+    "Makassar (Soekarno-Hatta) (IDMAK)",
+    "Others"
+  ],
+  "Germany": [
+    "Port of Hamburg (DEHAM)",
+    "Bremerhaven (DEBRV)",
+    "Wilhelmshaven (JadeWeserPort) (DEWVN)",
+    "Duisburg (Inland Marine Hub) (DEDUI)",
+    "Others"
+  ],
+  "Canada": [
+    "Port of Vancouver, BC (CAVAN)",
+    "Port of Montreal, QC (CAMTR)",
+    "Prince Rupert, BC (CAPRR)",
+    "Halifax Port, NS (CAHAL)",
+    "Toronto (Inland Marine Terminal) (CATOR)",
+    "Others"
+  ],
+  "Qatar": [
+    "Hamad Port, Doha (QAHMD)",
+    "Ras Laffan (QARLF)",
+    "Mesaieed (QAMSD)",
+    "Others"
+  ],
+  "Oman": [
+    "Port of Sohar (OMSOH)",
+    "Port of Salalah (OMSLL)",
+    "Port Sultan Qaboos, Muscat (OMMSQ)",
+    "Others"
+  ],
+  "Kuwait": [
+    "Shuwaikh Port (KWSHU)",
+    "Shuaiba Port (KWSAA)",
+    "Others"
+  ],
+  "Bahrain": [
+    "Khalifa Bin Salman Port (BHKBS)",
+    "Mina Salman (BHMIN)",
+    "Others"
+  ],
+  "Netherlands": [
+    "Port of Rotterdam (NLRTM)",
+    "Port of Amsterdam (NLAMS)",
+    "Moerdijk (NLMOE)",
+    "Others"
+  ],
+  "Belgium": [
+    "Port of Antwerp-Bruges (BEANR)",
+    "Port of Zeebrugge (BEZEE)",
+    "Ghent (BEGNE)",
+    "Others"
+  ],
+  "France": [
+    "Port of Le Havre (FRLEH)",
+    "Marseille / Fos-sur-Mer (FRFOS)",
+    "Dunkirk (FRDKK)",
+    "Others"
+  ],
+  "Italy": [
+    "Port of Genoa (ITGOA)",
+    "Gioia Tauro (ITGIT)",
+    "La Spezia (ITSPE)",
+    "Trieste (ITTRS)",
+    "Livorno (ITLIV)",
+    "Others"
+  ],
+  "Spain": [
+    "Port of Valencia (ESVLC)",
+    "Port of Algeciras (ESALG)",
+    "Port of Barcelona (ESBCN)",
+    "Bilbao (ESBIO)",
+    "Others"
+  ],
+  "Turkey": [
+    "Mersin International Port (TRMER)",
+    "Istanbul / Ambarli (TRIST)",
+    "Izmir Port (TRIZM)",
+    "Gebze / Evyap (TREVY)",
+    "Others"
+  ],
+  "Australia": [
+    "Port of Melbourne (AUMEL)",
+    "Port Botany, Sydney (AUSYD)",
+    "Port of Brisbane (AUBNE)",
+    "Fremantle Port, Perth (AUFRE)",
+    "Adelaide (AUADL)",
+    "Others"
+  ],
+  "New Zealand": [
+    "Port of Auckland (NZAKL)",
+    "Port of Tauranga (NZTRG)",
+    "Lyttelton / Christchurch (NZLYT)",
+    "Others"
+  ],
+  "Thailand": [
+    "Laem Chabang Port (THLCH)",
+    "Bangkok Port (THBKK)",
+    "Map Ta Phut (THMAT)",
+    "Others"
+  ],
+  "Vietnam": [
+    "Cat Lai / Ho Chi Minh City (VNSGN)",
+    "Cai Mep International Terminal (VNCMT)",
+    "Hai Phong (VNHPH)",
+    "Da Nang (VNDAD)",
+    "Others"
+  ],
+  "Japan": [
+    "Tokyo Port (JPTYO)",
+    "Yokohama (JPYOK)",
+    "Kobe Port (JPUKB)",
+    "Osaka Port (JPOSA)",
+    "Nagoya Port (JPNGO)",
+    "Others"
+  ],
+  "South Korea": [
+    "Busan Port (KRPUS)",
+    "Incheon Port (KRINC)",
+    "Gwangyang (KRKAN)",
+    "Pyeongtaek (KRPTK)",
+    "Others"
   ],
   "Bangladesh": [
     "Chittagong / Chattogram Port (BDCGP)",
     "Mongla Port (BDMGL)",
     "Payra Port (BDPAY)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "South Africa": [
     "Port of Durban (ZADUR)",
     "Port of Cape Town (ZACPT)",
     "Port Elizabeth / Ngqura (ZAPLZ)",
     "Coega (ZAZBA)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "Egypt": [
     "Port Said (East/West) (EGPSD)",
     "Alexandria Port (EGALY)",
     "Damietta Port (EGDAM)",
     "Ain Sokhna (EGSOK)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "Brazil": [
     "Port of Santos (BRSSZ)",
     "Paranaguá Port (BRPNG)",
     "Rio de Janeiro (BRRIO)",
     "Itajaí (BRITJ)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "Mexico": [
     "Manzanillo Port (MXZLO)",
     "Veracruz Port (MXVER)",
     "Lázaro Cárdenas (MXLZC)",
     "Altamira Port (MXATM)",
-    "Others (Specify Port)"
+    "Others"
   ],
   "Others": [
-    "Others (Specify Custom Port)"
+    "Others"
   ]
 };
 
-// 2. Product Line Cascades: Commodities and Export Technical Grades (Kavri Exim Specification)
+// 2. Product Line Cascades: Commodities and Target Grade Specifications (Exact Kavri Exim Bt Catalog)
 const COMMODITY_DATA = {
   "Spices": {
-    "Alleppey Green Cardamom (Elettaria Cardamomum)": [
-      "AGEB — Alleppey Green Extra Bold (8mm+ Sortex Graded)",
-      "AGB — Alleppey Green Bold (7.5mm - 8mm)",
-      "AGS — Alleppey Green Superior (7mm - 7.5mm)",
-      "AGM — Alleppey Green Medium (6.5mm - 7mm)",
-      "Green Cardamom Seeds / Decorticated (Sortex Cleaned)",
-      "Custom / Others (Specify Grade)"
+    "Alleppey Green Cardamom (Small Cardamom)": [
+      "AGSEB — Alleppey Green Special Extra Bold (8.5mm+)",
+      "AGEB — Alleppey Green Extra Bold (8.0mm+)",
+      "AGB — Alleppey Green Bold (7.5mm - 8.0mm)",
+      "AGS — Alleppey Green Superior (7.0mm - 7.5mm)",
+      "AGL — Alleppey Green Shipment / Light",
+      "CS — Decorticated Cardamom Seeds",
+      "Others (Specify Custom Grade)"
     ],
-    "Tellicherry & Malabar Black Pepper (Piper Nigrum)": [
-      "TGSEB — Tellicherry Garbled Special Extra Bold (4.75mm+ Pinhead Free)",
-      "TGM — Tellicherry Garbled Extra Bold (4.25mm+)",
-      "MG-1 — Malabar Garbled (550+ GL Density)",
-      "Kolli Hills High-Piperine Black Pepper (Piperine > 6.5%)",
-      "Steam-Sterilized Coarse Ground & Crushed Black Pepper (20–40 Mesh)",
-      "Custom / Others (Specify Grade)"
+    "Tellicherry & Malabar Black Pepper": [
+      "TGSEB — Tellicherry Garbled Special Extra Bold (4.75mm+)",
+      "TGEB — Tellicherry Garbled Extra Bold (4.25mm+)",
+      "TG — Tellicherry Garbled",
+      "MG-1 (500 / 550 GL) — Malabar Garbled 1",
+      "LB / Pinheads — Light Berries / Pinheads",
+      "Others (Specify Custom Grade)"
     ],
-    "GI-Certified Erode & Salem Turmeric (Curcuma Longa)": [
-      "Erode Double Polished Finger (Curcumin 3.0% - 3.5%, GI Certified)",
-      "Salem Golden Yellow Finger (Curcumin 4.5% - 5.5% High Curcumin)",
-      "Erode & Salem Polished Turmeric Bulbs (Gatha / Round)",
-      "Pure Steam-Sterilized Ground Turmeric Powder (Sortex Cleaned, Destoned)",
-      "Turmeric Splits / Industrial Extraction Grade",
-      "Custom / Others (Specify Grade)"
+    "Kolli Hills Black Pepper (High-Piperine Mountain Pepper)": [
+      "Kolli Mountain Bold (Retained on 4.50mm, Piperine > 6.5%)",
+      "Kolli Garbled Standard (Retained on 4.00mm)",
+      "Kolli Whole Extraction Grade (Retained on 3.25mm)",
+      "Others (Specify Custom Grade)"
     ],
-    "Red Chilli & Paprika (Capsicum Annuum)": [
+    "Salem Turmeric Fingers & Bulbs": [
+      "Super Salem Double Polished Finger (Grade 1)",
+      "Salem Single Polished Finger",
+      "Salem Turmeric Bulbs (Gatha / Round)",
+      "Others (Specify Custom Grade)"
+    ],
+    "Erode Turmeric Fingers & Bulbs (GI-Certified)": [
+      "Erode GI Finger Special (Double Polished, Curcumin 3.0%-3.5%)",
+      "Erode GI Finger Standard (Single Polished)",
+      "Erode Round Bulbs (Gatha / Mother Rhizome)",
+      "Others (Specify Custom Grade)"
+    ],
+    "Pure Ground Turmeric Powder (Haldi Powder)": [
+      "Salem / Erode Origin Pure Ground (Sortex Cleaned)",
+      "High-Curcumin Standardized Grade (Curcumin 4.5%-5.5%+)",
+      "Ultra-Fine Industrial Grinding (80-100 Mesh)",
+      "Steam-Sterilized Micro-Clean Grade (HTST Treated)",
+      "Others (Specify Custom Grade)"
+    ],
+    "Red Chilli & Paprika (Whole & Flakes)": [
       "Teja S17 Stemless (High Heat 75,000+ SHU, Bright Red)",
       "S4 Sannam Stemless / With Stem (Medium Heat 25,000–35,000 SHU)",
       "Byadgi Whole Chilli (Deep Red ASTA Color 120+, Low Pungency)",
       "Crushed Chilli Flakes / Pizza Flakes with Seeds (Heat Controlled)",
       "Kashmiri Whole Chilli & Fine Mild Red Powder",
-      "Custom / Others (Specify Grade)"
+      "Others (Specify Custom Grade)"
     ],
     "Cumin, Coriander & Fennel Seeds": [
       "Singapore Quality Whole Cumin (99% Purity, Machine Cleaned)",
       "Europe Quality Whole Cumin (99.5% Purity, Sortex Cleaned)",
-      "Eagle Quality Green Coriander Whole (Kaveri Basin)",
-      "Scooter Quality Coriander Whole",
+      "Green Coriander Whole (Kaveri Basin)",
       "Lucknowi Sweet Green Fennel Seeds (Saunf 99%+)",
-      "Custom / Others (Specify Grade)"
-    ],
-    "Whole Plantation Spices (Cloves, Nutmeg, Cinnamon)": [
-      "Lal Pari Quality Handpicked Whole Cloves (Zanzibar / Madagascar Standard)",
-      "Whole Indian Nutmeg with Shell / Shelled (ABCD Grade)",
-      "Golden Yellow Mace Flowers (Whole Flower Blades)",
-      "Ceylon Cinnamon Quills (Alba / C5 Special Export Grade)",
-      "Whole Star Anise (Autumn Crop, 8-Point Intact)",
-      "Green Fenugreek / Methi Seeds (Machine Cleaned)",
-      "Custom / Others (Specify Grade)"
-    ]
-  },
-  "Handcrafts": {
-    "Traditional Heritage Brassware & Sacred Art": [
-      "Lost-Wax Cast Heritage Brass Temple Idols & Deities",
-      "Traditional Antique Brass Urli Floating Flower Bowls (10–24 inch)",
-      "Handcrafted Peacock Hanging Diya & Temple Oil Lamps",
-      "Carved Brass Pooja Bells, Incense Burners & Trays",
-      "Cast Brass Traditional Heritage Sculptures & Wall Hangings",
-      "Custom / Others (Specify Dimensions & Finish)"
-    ],
-    "Hand-Carved Teakwood & Sheesham Keepsake Chests": [
-      "Antique Brass Inlay Sheesham Box (10x6x4 in with Latch)",
-      "Hand-Carved Floral Rosewood Jewelry Box with Velvet Lining",
-      "Hand-Carved Teakwood Decorative Wall Relief Panels",
-      "Multi-Compartment Wooden Keepsake Chest with Secret Lock",
-      "Custom Laser Engraved / OEM Dimensions & Branding"
-    ],
-    "Artisanal Wooden Kitchen Utilities & Tableware": [
-      "Teakwood Serving Platter with Cast Brass Handles",
-      "Sheesham Spice Box (9-Compartment Traditional Masala Dabba)",
-      "Hand-Turned Rosewood Salad Bowls & Server Spoon Pairs",
-      "Handcrafted Wooden Trivets, Coaster Sets & Tissue Holders",
-      "Custom Teak / Acacia Wood Kitchenware"
-    ],
-    "Architectural Terracotta, Clay Pottery & Planters": [
-      "Hand-Molded Architectural Terracotta Decorative Urns",
-      "Indoor & Outdoor Unglazed Clay Garden Planters",
-      "Traditional Clay Cooking Handi Pots & Water Coolers",
-      "Custom Terracotta Heritage Murals & Relief Pottery"
-    ],
-    "Artisanal Pure Copper & Stone Inlay Decor": [
-      "Hammered 100% Pure Ayurvedic Copper Water Pitcher & Tumbler Sets",
-      "Pietra Dura Inlay White Marble Coasters, Trivets & Platters",
-      "Hand-Carved Soapstone Floral Aroma Oil Burners & Tea-light Holders",
-      "Custom Marble & Copper Artisan Decor"
+      "Others (Specify Custom Grade)"
     ]
   },
   "Textiles": {
-    "100% Combed Cotton T-Shirts & Knitted Apparel": [
-      "180 GSM Single Jersey Bio-Washed Combed Cotton Crewneck",
-      "220 GSM Heavyweight French Terry Oversized Drop-Shoulder Tee",
-      "160 GSM Lightweight Summer Combed Cotton T-Shirt",
-      "240 GSM Pique Knit Polo Shirts with Ribbed Collar",
-      "Custom OEM Screen Print, High-Density Print & Pantone Reactive Dye",
-      "Custom / Others (Specify GSM & Cut)"
+    "Custom Export Cotton T-Shirts & Corporate Polos (OEM / Private Label)": [
+      "Retail Bio-Washed Crewneck (180 GSM Combed Cotton)",
+      "Heavyweight Streetwear Tee (220-240 GSM French Terry)",
+      "Super Combed Lightweight Tee (160 GSM)",
+      "Corporate Uniform Polo Shirt (240 GSM Pique Knit)",
+      "Others (Specify Custom GSM / Cut)"
     ],
-    "Export Terry Bath Towels & Luxury Hotel Linens": [
-      "600 GSM Ring-Spun Combed Cotton Luxury Bath Towel (70x140 cm)",
-      "500 GSM Zero-Twist Ultra Plush Hotel Bath Sheet (90x150 cm)",
-      "400 GSM Quick-Dry Pool / Spa Cabana Stripe Towel",
-      "Waffle Weave Cotton Bath Robes & Matching Hand Towel Sets",
-      "Custom Jacquard Woven Border & Woven Hotel Brand Label"
+    "Hospitality & Luxury Cotton Terry Towels (OEM / Institutional Export)": [
+      "Executive Hotel Bath Towel (500 GSM Ring-Spun Cotton)",
+      "Luxury Bath Sheet / Pool Towel (600-650 GSM)",
+      "Hand Towel / Salon Towel (400 GSM)",
+      "Face Cloth / Washcloth (Finger Towel)",
+      "Heavyweight Bath Mat (Framed 800-900 GSM)",
+      "Others (Specify Custom Weight)"
     ],
-    "Luxury Cotton Bedsheets, Duvets & Home Linens": [
-      "300–400 Thread Count (TC) Pure Cotton Sateen Bedsheet Sets",
-      "500–600 TC Egyptian & Indian Long-Staple Cotton Percale Hotel Sheets",
-      "Duvet Covers, Pillow Shams & Fitted Sheet Program",
-      "Woven Cotton Tablecloths, Table Runners & 100% Cotton Dining Napkins",
-      "Custom / Others (Specify TC & Dimensions)"
+    "Luxury Cotton Bedsheet Sets, Duvets & Pillowcases (OEM / Institutional Export)": [
+      "500 - 600 TC Luxury Sateen Set",
+      "300 - 400 TC Executive Sateen Set",
+      "200 - 300 TC Crisp Percale Set",
+      "Duvet Covers & Oxford Pillowcases",
+      "Others (Specify Custom TC)"
     ],
-    "Cotton Kitchen Linens & Heavy Canvas Bags": [
-      "Waffle Weave Pure Cotton Kitchen Dish Towels (300 GSM)",
-      "Heavyweight 100% Cotton Canvas Tote Bags (280–340 GSM)",
-      "Calico / Muslin Drawstring Produce & Storage Bags",
-      "Custom OEM Screen Printed Canvas Merchandise Bags"
+    "Table, Kitchen & Dining Linens (OEM / Private Label Export)": [
+      "Waffle Weave & Flat-Weave Tea Towels (300 GSM)",
+      "Stonewashed Pure Linen Table Runner & Napkins",
+      "Yarn-Dyed Cotton Banquet Tablecloths",
+      "Chef Aprons & Heavy Utility Kitchen Sets",
+      "Others (Specify Custom Specs)"
     ],
-    "Woven Grey Fabric Rolls & Knitted Mill Fabrics": [
-      "Single Jersey Knitted Fabric Rolls (Raw Greige & Bio-Polished)",
-      "100% Cotton Poplin, Twill & Oxford Woven Fabric Rolls",
-      "2x2 Rib Knit Collar & Cuff Tubular Rolls",
-      "Custom Yarn-Dyed Checks & Stripes Mill Fabric"
+    "Mill-Woven Yarn-Dyed Fabrics (Shirting, Bottom-Weight & Suitings)": [
+      "Royal Oxford & Pinpoint Shirting",
+      "Classic Micro-Check & Poplin Shirting",
+      "Chino & Trouser Bottom-Weight Twill",
+      "Linen-Cotton Summer Slub Weave",
+      "Others (Specify Custom Weave)"
+    ]
+  },
+  "Handcrafts": {
+    "Artisanal Brassware & Lost-Wax Bronze Artefacts": [
+      "Traditional Nachiarkoil Kuthuvilakku (Temple Oil Lamp)",
+      "Ornamental Peacock & Floral Urli Bowls",
+      "Swamimalai Lost-Wax Chola Bronzes (GI-Tagged)",
+      "Hand-Engraved Temple Bells & Wall Hangings",
+      "Others (Specify Dimensions / Finish)"
+    ],
+    "Modern Home Décor, Woodenware & Heritage Artefacts (OEM / Custom Sourcing)": [
+      "Artisanal Wooden Keepsake & Jewellery Boxes",
+      "Contemporary Wall Relief Panels & Hangings",
+      "Bespoke Wooden Tableware & Tea Collections",
+      "Terracotta & Earthenware Sculptural Accents",
+      "Others (Specify Custom Design)"
+    ],
+    "B2B Turnkey Private Label, OEM & Custom Contract Sourcing": [
+      "Private-Label Retail Spices & Condiments",
+      "Sustainable Living & Hotel Amenities",
+      "Boutique Glassware & Tableware Accessories",
+      "Curated Luxury Corporate & Diplomatic Hampers",
+      "Others (Specify Custom Program)"
     ]
   },
   "Bamboo": {
@@ -607,25 +605,25 @@ const COMMODITY_DATA = {
       "Child Soft Rounded Nylon-6 Pastel Bristles",
       "Flat Ergonomic Handle with Laser Engraved Brand Logo",
       "Round Cylindrical Handle with 100% Castor Bean Oil Bristles",
-      "Custom Retail Kraft Box Packaging & Travel Bamboo Cases"
+      "Others (Specify Custom Bamboo Specs)"
     ],
     "Handcrafted Neem Wood & Bamboo Grooming Combs": [
       "Dual-Tooth Wide Handle Anti-Static Pure Neem Comb",
       "Pocket Beard & Fine Hair Detangling Bamboo Comb",
       "Bamboo Paddle Hairbrush with Wooden Bristles & Rubber Cushion",
-      "Custom / Others (Specify Model)"
+      "Others (Specify Custom Comb Model)"
     ],
     "Bamboo Corporate Stationery & Executive Gifts": [
       "Bamboo Barrel Ballpoint Pen with Solid Brass Clip (Refillable)",
       "Spiral Bamboo Hardcover Journal with Recycled Cotton Paper",
       "Bamboo Desk Organizer with Wireless Charging Pad Dock",
-      "Custom Laser Engraved Corporate Gift Sets in Kraft Gift Box"
+      "Others (Specify Custom Stationery / Gift Specs)"
     ],
     "Bamboo Kitchenware, Travel Cutlery & Utility": [
       "4-Piece Bamboo Cutlery Set (Fork, Knife, Spoon, Straw) in Organic Cotton Pouch",
       "Solid Bamboo End-Grain Chopping & Serving Board (ISPM-15)",
       "Reusable Bamboo Drinking Straws with Coir Cleaning Brush",
-      "Bamboo Soap Dishes & Bathroom Storage Racks"
+      "Others (Specify Custom Bamboo Utility Specs)"
     ]
   },
   "Plastic": {
@@ -633,18 +631,21 @@ const COMMODITY_DATA = {
       "Food-Grade HDPE Drums & Tight-Head Jerry Cans (5L – 30L)",
       "Heavy-Duty PP Industrial Stacking Crates & Perforated Baskets",
       "Agricultural Polymer Carboys & Chemical Resistant Bottles",
-      "Heavy-Duty Recycled Plastic Pallets (ISPM-15 Exempt)"
+      "Heavy-Duty Recycled Plastic Pallets (ISPM-15 Exempt)",
+      "Others (Specify Custom Industrial Plastic Specs)"
     ],
     "Commercial Household, Storage & Utility Ware": [
       "Virgin Polymer Multipurpose Storage Bins & Modular Organizers",
       "Airtight Modular Kitchen Food Storage Containers (BPA-Free)",
       "Food-Grade Microwave-Safe Airtight Tiffin Containers",
-      "Heavy-Duty Commercial Plastic Basins, Buckets & Waste Bins"
+      "Heavy-Duty Commercial Plastic Basins, Buckets & Waste Bins",
+      "Others (Specify Custom Commercial Ware Specs)"
     ],
     "Custom Precision Injection Molded Components": [
       "Custom Tooling Precision Engineering Plastics (POM, PA6, ABS, PC)",
       "Industrial Polymer Closures, Dispenser Pumps & Screw Caps",
-      "Custom OEM Molded Technical Components"
+      "Custom OEM Molded Technical Components",
+      "Others (Specify Custom Injection Molding Specs)"
     ]
   }
 };
@@ -827,7 +828,6 @@ COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
       }
 
       // Smooth scroll to RFQ form
-      const rfqSec = document.getElementById('rfq');
       if (rfqSec) {
         const top = rfqSec.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight - 20;
         window.scrollTo({ top, behavior: 'smooth' });
