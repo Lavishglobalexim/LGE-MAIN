@@ -23,6 +23,7 @@
         <li><a href="port-info.html">Port Info</a></li>
         <li><a href="index.html#why-us-process">Why Us & Process</a></li>
         <li><a href="contact.html" class="active">Contact</a></li>
+        <li class="nav-mobile-cta"><a href="contact.html">Request Quote →</a></li>
       </ul>
       <a href="contact.html" class="btn btn-nav">Request Quote</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -136,6 +137,16 @@
                 <input type="tel" id="rfqPhone" placeholder="+971 50 123 4567" required />
               </div>
             </div>
+            <div class="form-group">
+              <label>Buyer Business Category / Profile *</label>
+              <select id="rfqBuyerType" required>
+                <option value="Direct Importer / Wholesale Distributor">Direct Importer / Wholesale Distributor</option>
+                <option value="Enterprise Brand / OEM Retailer">Enterprise Brand / OEM Retailer</option>
+                <option value="Supermarket / Hypermarket Chain Buyer">Supermarket / Hypermarket Chain Buyer</option>
+                <option value="Institutional / Government Procurement">Institutional / Government Procurement</option>
+                <option value="Commodity Broker / International Trading House">Commodity Broker / International Trading House</option>
+              </select>
+            </div>
 
             <!-- 2. Commodity & Technical Grade Details -->
             <div class="form-section-header">
@@ -145,11 +156,11 @@
             <div class="form-group">
               <label>Major Product Line *</label>
               <select id="rfqProductLine" required>
-                <option value="Spices">🌶️ Spices & Seasonings (Cardamom, Pepper, Turmeric)</option>
-                <option value="Handcrafts">🏺 Indian Handicrafts & Engraved Wooden Boxes</option>
-                <option value="Textiles">🧵 Pure Cotton Textiles, T-Shirts & Terry Towels</option>
-                <option value="Bamboo">🎋 Sustainable Eco-Bamboo Toothbrushes, Combs & Pens</option>
-                <option value="Plastic">♻️ Commercial & Industrial Plastic Products</option>
+                <option value="Spices">🌶️ Spices & Seasoning (Cardamom, Pepper, Turmeric)</option>
+                <option value="Handcrafts">🏺 Handcrafts & Arifacts (Heritage Crafts & Wooden Decor)</option>
+                <option value="Textiles">🧵 Textiles & Fabrics (Apparel & Terry Towels)</option>
+                <option value="Bamboo">🎋 Bamboo Products (Toothbrushes, Combs & Pens)</option>
+                <option value="Plastic">♻️ Plastics Things (Commercial & Industrial)</option>
               </select>
             </div>
             <div class="form-row">
@@ -204,16 +215,37 @@
                 <label>Destination Country *</label>
                 <select id="rfqCountry" required>
                   <option value="UAE">🇦🇪 United Arab Emirates (UAE)</option>
+                  <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
+                  <option value="Qatar">🇶🇦 Qatar</option>
+                  <option value="Oman">🇴🇲 Oman</option>
+                  <option value="Kuwait">🇰🇼 Kuwait</option>
+                  <option value="Bahrain">🇧🇭 Bahrain</option>
                   <option value="USA">🇺🇸 United States of America (USA)</option>
                   <option value="UK">🇬🇧 United Kingdom (UK)</option>
                   <option value="Germany">🇩🇪 Germany</option>
+                  <option value="Netherlands">🇳🇱 Netherlands (Rotterdam / Amsterdam)</option>
+                  <option value="Belgium">🇧🇪 Belgium (Antwerp-Bruges)</option>
+                  <option value="France">🇫🇷 France</option>
+                  <option value="Italy">🇮🇹 Italy</option>
+                  <option value="Spain">🇪🇸 Spain</option>
+                  <option value="Turkey">🇹🇷 Turkey</option>
+                  <option value="Canada">🇨🇦 Canada</option>
+                  <option value="Australia">🇦🇺 Australia</option>
+                  <option value="New Zealand">🇳🇿 New Zealand</option>
                   <option value="Singapore">🇸🇬 Singapore</option>
                   <option value="Malaysia">🇲🇾 Malaysia</option>
-                  <option value="Saudi Arabia">🇸🇦 Saudi Arabia</option>
-                  <option value="Canada">🇨🇦 Canada</option>
-                  <option value="Sri Lanka">🇱🇰 Sri Lanka</option>
-                  <option value="China">🇨🇳 China</option>
                   <option value="Indonesia">🇮🇩 Indonesia</option>
+                  <option value="Thailand">🇹🇭 Thailand</option>
+                  <option value="Vietnam">🇻🇳 Vietnam</option>
+                  <option value="Japan">🇯🇵 Japan</option>
+                  <option value="South Korea">🇰🇷 South Korea</option>
+                  <option value="China">🇨🇳 China</option>
+                  <option value="Sri Lanka">🇱🇰 Sri Lanka</option>
+                  <option value="Bangladesh">🇧🇩 Bangladesh</option>
+                  <option value="South Africa">🇿🇦 South Africa</option>
+                  <option value="Egypt">🇪🇬 Egypt</option>
+                  <option value="Brazil">🇧🇷 Brazil</option>
+                  <option value="Mexico">🇲🇽 Mexico</option>
                   <option value="Others">🌍 Others (Custom Country / Region)</option>
                 </select>
               </div>
@@ -335,22 +367,6 @@
             <a href="tel:+917448680888">+91 74486 80888</a>
           </div>
         </div>
-        <div class="cstrip-divider"></div>
-        <div class="cstrip-item">
-          <span>⚓</span>
-          <div>
-            <strong>Primary Origin Ports</strong>
-            <span>Tuticorin (INTUT) · Chennai (INMAA) · Cochin (INCOK)</span>
-          </div>
-        </div>
-        <div class="cstrip-divider"></div>
-        <div class="cstrip-item">
-          <span>🛡️</span>
-          <div>
-            <strong>Trade Terms</strong>
-            <span>Incoterms 2020: FOB · CIF · CFR · DAP · EXW</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -378,11 +394,11 @@
         <div class="footer-col">
           <h5>Product Divisions</h5>
           <ul>
-            <li><a href="products.html">Spices & Condiments</a></li>
-            <li><a href="products.html">Engraved Wooden Boxes</a></li>
+            <li><a href="products.html">Spices & Seasoning</a></li>
+            <li><a href="products.html">Handcrafts & Arifacts</a></li>
             <li><a href="products.html">Textiles & Fabrics</a></li>
-            <li><a href="products.html">Bamboo Toothbrush & Pens</a></li>
-            <li><a href="products.html">Commercial Plastics</a></li>
+            <li><a href="products.html">Bamboo Products</a></li>
+            <li><a href="products.html">Plastics Things</a></li>
           </ul>
         </div>
         <div class="footer-col">

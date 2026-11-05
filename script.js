@@ -15,18 +15,41 @@ window.addEventListener('scroll', () => {
 
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// ── Mobile Hamburger ─────────────────────────────────────────
+// ── Mobile Hamburger & Navigation Engine ──────────────────────
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
 if (hamburger && navLinks) {
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-    hamburger.classList.toggle('active');
-  });
-  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  function closeMobileNav() {
     navLinks.classList.remove('open');
     hamburger.classList.remove('active');
-  }));
+    document.body.style.overflow = '';
+  }
+
+  function toggleMobileNav() {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('active', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  hamburger.addEventListener('click', toggleMobileNav);
+
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeMobileNav);
+  });
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+      closeMobileNav();
+    }
+  });
+
+  // Reset body overflow if user resizes back to desktop width
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && navLinks.classList.contains('open')) {
+      closeMobileNav();
+    }
+  }, { passive: true });
 }
 
 // ── Particles for Hero overlay ───────────────────────────────
@@ -219,7 +242,7 @@ document.querySelectorAll('.product-card').forEach(card => {
    KAVRI EXIM STYLE COMPREHENSIVE RFQ SYSTEM & SEAPORT ENGINE
    ============================================================ */
 
-// 1. Destination Country to Exact Discharge Seaport UN/LOCODE Directory
+// 1. Destination Country to Exact Discharge Seaport UN/LOCODE Directory (Kavri Exim Global Ports Reference)
 const DESTINATION_PORTS = {
   "UAE": [
     "Jebel Ali Port, Dubai (AEJEA)",
@@ -227,6 +250,36 @@ const DESTINATION_PORTS = {
     "Port Khalid, Sharjah (AEPKH)",
     "Fujairah Port (AEFJR)",
     "Ajman Port (AEAJM)",
+    "Others (Specify Port)"
+  ],
+  "Saudi Arabia": [
+    "Jeddah Islamic Port (SAJED)",
+    "King Abdulaziz Port, Dammam (SADMM)",
+    "King Abdullah Port, Rabigh (SAKAP)",
+    "Jubail Commercial Port (SAJUB)",
+    "Yanbu Commercial Port (SAYNB)",
+    "Others (Specify Port)"
+  ],
+  "Qatar": [
+    "Hamad Port, Doha (QAHMD)",
+    "Ras Laffan (QARLF)",
+    "Mesaieed (QAMSD)",
+    "Others (Specify Port)"
+  ],
+  "Oman": [
+    "Port of Sohar (OMSOH)",
+    "Port of Salalah (OMSLL)",
+    "Port Sultan Qaboos, Muscat (OMMSQ)",
+    "Others (Specify Port)"
+  ],
+  "Kuwait": [
+    "Shuwaikh Port (KWSHU)",
+    "Shuaiba Port (KWSAA)",
+    "Others (Specify Port)"
+  ],
+  "Bahrain": [
+    "Khalifa Bin Salman Port (BHKBS)",
+    "Mina Salman (BHMIN)",
     "Others (Specify Port)"
   ],
   "USA": [
@@ -256,6 +309,68 @@ const DESTINATION_PORTS = {
     "Duisburg (Inland Marine Hub) (DEDUI)",
     "Others (Specify Port)"
   ],
+  "Netherlands": [
+    "Port of Rotterdam (NLRTM)",
+    "Port of Amsterdam (NLAMS)",
+    "Moerdijk (NLMOE)",
+    "Others (Specify Port)"
+  ],
+  "Belgium": [
+    "Port of Antwerp-Bruges (BEANR)",
+    "Port of Zeebrugge (BEZEE)",
+    "Ghent (BEGNE)",
+    "Others (Specify Port)"
+  ],
+  "France": [
+    "Port of Le Havre (FRLEH)",
+    "Marseille / Fos-sur-Mer (FRFOS)",
+    "Dunkirk (FRDKK)",
+    "Others (Specify Port)"
+  ],
+  "Italy": [
+    "Port of Genoa (ITGOA)",
+    "Gioia Tauro (ITGIT)",
+    "La Spezia (ITSPE)",
+    "Trieste (ITTRS)",
+    "Livorno (ITLIV)",
+    "Others (Specify Port)"
+  ],
+  "Spain": [
+    "Port of Valencia (ESVLC)",
+    "Port of Algeciras (ESALG)",
+    "Port of Barcelona (ESBCN)",
+    "Bilbao (ESBIO)",
+    "Others (Specify Port)"
+  ],
+  "Turkey": [
+    "Mersin International Port (TRMER)",
+    "Istanbul / Ambarli (TRIST)",
+    "Izmir Port (TRIZM)",
+    "Gebze / Evyap (TREVY)",
+    "Others (Specify Port)"
+  ],
+  "Canada": [
+    "Port of Vancouver, BC (CAVAN)",
+    "Port of Montreal, QC (CAMTR)",
+    "Prince Rupert, BC (CAPRR)",
+    "Halifax Port, NS (CAHAL)",
+    "Toronto (Inland Marine Terminal) (CATOR)",
+    "Others (Specify Port)"
+  ],
+  "Australia": [
+    "Port of Melbourne (AUMEL)",
+    "Port Botany, Sydney (AUSYD)",
+    "Port of Brisbane (AUBNE)",
+    "Fremantle Port, Perth (AUFRE)",
+    "Adelaide (AUADL)",
+    "Others (Specify Port)"
+  ],
+  "New Zealand": [
+    "Port of Auckland (NZAKL)",
+    "Port of Tauranga (NZTRG)",
+    "Lyttelton / Christchurch (NZLYT)",
+    "Others (Specify Port)"
+  ],
   "Singapore": [
     "Port of Singapore (PSA) (SGSIN)",
     "Jurong Port (SGJUR)",
@@ -269,26 +384,40 @@ const DESTINATION_PORTS = {
     "Kuantan Port (MYKUA)",
     "Others (Specify Port)"
   ],
-  "Saudi Arabia": [
-    "Jeddah Islamic Port (SAJED)",
-    "King Abdulaziz Port, Dammam (SADMM)",
-    "King Abdullah Port, Rabigh (SAKAP)",
-    "Jubail Commercial Port (SAJUB)",
-    "Yanbu Commercial Port (SAYNB)",
+  "Indonesia": [
+    "Tanjung Priok, Jakarta (IDTPP)",
+    "Tanjung Perak, Surabaya (IDTPS)",
+    "Belawan Port, Medan (IDBLW)",
+    "Tanjung Emas, Semarang (IDSRG)",
+    "Makassar (Soekarno-Hatta) (IDMAK)",
     "Others (Specify Port)"
   ],
-  "Canada": [
-    "Port of Vancouver, BC (CAVAN)",
-    "Port of Montreal, QC (CAMTR)",
-    "Prince Rupert, BC (CAPRR)",
-    "Halifax Port, NS (CAHAL)",
-    "Toronto (Inland Marine Terminal) (CATOR)",
+  "Thailand": [
+    "Laem Chabang Port (THLCH)",
+    "Bangkok Port (THBKK)",
+    "Map Ta Phut (THMAT)",
     "Others (Specify Port)"
   ],
-  "Sri Lanka": [
-    "Colombo Port (LKCMB)",
-    "Hambantota International Port (LKHRI)",
-    "Trincomalee Port (LKTRR)",
+  "Vietnam": [
+    "Cat Lai / Ho Chi Minh City (VNSGN)",
+    "Cai Mep International Terminal (VNCMT)",
+    "Hai Phong (VNHPH)",
+    "Da Nang (VNDAD)",
+    "Others (Specify Port)"
+  ],
+  "Japan": [
+    "Tokyo Port (JPTYO)",
+    "Yokohama (JPYOK)",
+    "Kobe Port (JPUKB)",
+    "Osaka Port (JPOSA)",
+    "Nagoya Port (JPNGO)",
+    "Others (Specify Port)"
+  ],
+  "South Korea": [
+    "Busan Port (KRPUS)",
+    "Incheon Port (KRINC)",
+    "Gwangyang (KRKAN)",
+    "Pyeongtaek (KRPTK)",
     "Others (Specify Port)"
   ],
   "China": [
@@ -302,12 +431,44 @@ const DESTINATION_PORTS = {
     "Dalian Port (CNDLC)",
     "Others (Specify Port)"
   ],
-  "Indonesia": [
-    "Tanjung Priok, Jakarta (IDTPP)",
-    "Tanjung Perak, Surabaya (IDTPS)",
-    "Belawan Port, Medan (IDBLW)",
-    "Tanjung Emas, Semarang (IDSRG)",
-    "Makassar (Soekarno-Hatta) (IDMAK)",
+  "Sri Lanka": [
+    "Colombo Port (LKCMB)",
+    "Hambantota International Port (LKHRI)",
+    "Trincomalee Port (LKTRR)",
+    "Others (Specify Port)"
+  ],
+  "Bangladesh": [
+    "Chittagong / Chattogram Port (BDCGP)",
+    "Mongla Port (BDMGL)",
+    "Payra Port (BDPAY)",
+    "Others (Specify Port)"
+  ],
+  "South Africa": [
+    "Port of Durban (ZADUR)",
+    "Port of Cape Town (ZACPT)",
+    "Port Elizabeth / Ngqura (ZAPLZ)",
+    "Coega (ZAZBA)",
+    "Others (Specify Port)"
+  ],
+  "Egypt": [
+    "Port Said (East/West) (EGPSD)",
+    "Alexandria Port (EGALY)",
+    "Damietta Port (EGDAM)",
+    "Ain Sokhna (EGSOK)",
+    "Others (Specify Port)"
+  ],
+  "Brazil": [
+    "Port of Santos (BRSSZ)",
+    "Paranaguá Port (BRPNG)",
+    "Rio de Janeiro (BRRIO)",
+    "Itajaí (BRITJ)",
+    "Others (Specify Port)"
+  ],
+  "Mexico": [
+    "Manzanillo Port (MXZLO)",
+    "Veracruz Port (MXVER)",
+    "Lázaro Cárdenas (MXLZC)",
+    "Altamira Port (MXATM)",
     "Others (Specify Port)"
   ],
   "Others": [
@@ -315,141 +476,185 @@ const DESTINATION_PORTS = {
   ]
 };
 
-// 2. Product Line Cascades: Commodities and Export Technical Grades
+// 2. Product Line Cascades: Commodities and Export Technical Grades (Kavri Exim Specification)
 const COMMODITY_DATA = {
   "Spices": {
-    "Cardamom (Alleppey Green Extra Bold)": [
-      "AGEB — Alleppey Green Extra Bold (8mm+)",
+    "Alleppey Green Cardamom (Elettaria Cardamomum)": [
+      "AGEB — Alleppey Green Extra Bold (8mm+ Sortex Graded)",
       "AGB — Alleppey Green Bold (7.5mm - 8mm)",
       "AGS — Alleppey Green Superior (7mm - 7.5mm)",
-      "Split / Small Green Cardamom Pods",
-      "Custom / Others (Specify)"
+      "AGM — Alleppey Green Medium (6.5mm - 7mm)",
+      "Green Cardamom Seeds / Decorticated (Sortex Cleaned)",
+      "Custom / Others (Specify Grade)"
     ],
-    "Black Pepper (Tellicherry & Malabar Garbled)": [
-      "TGSEB — Tellicherry Garbled Special Extra Bold (4.75mm+)",
-      "TGM — Tellicherry Garbled (4.25mm+)",
+    "Tellicherry & Malabar Black Pepper (Piper Nigrum)": [
+      "TGSEB — Tellicherry Garbled Special Extra Bold (4.75mm+ Pinhead Free)",
+      "TGM — Tellicherry Garbled Extra Bold (4.25mm+)",
       "MG-1 — Malabar Garbled (550+ GL Density)",
-      "Coarse Ground & Crushed Black Pepper",
-      "Custom / Others (Specify)"
+      "Kolli Hills High-Piperine Black Pepper (Piperine > 6.5%)",
+      "Steam-Sterilized Coarse Ground & Crushed Black Pepper (20–40 Mesh)",
+      "Custom / Others (Specify Grade)"
     ],
-    "Turmeric (Erode / Salem Double Polished)": [
-      "Erode Double Polished Finger (Curcumin 3.0% - 3.5%)",
-      "Salem Golden Yellow Finger (Curcumin 4.5% - 5.5%)",
-      "Steam Sterilized Turmeric Powder (Curcumin 3.5%+)",
-      "Turmeric Bulbs / Unpolished Splits",
-      "Custom / Others (Specify)"
+    "GI-Certified Erode & Salem Turmeric (Curcuma Longa)": [
+      "Erode Double Polished Finger (Curcumin 3.0% - 3.5%, GI Certified)",
+      "Salem Golden Yellow Finger (Curcumin 4.5% - 5.5% High Curcumin)",
+      "Erode & Salem Polished Turmeric Bulbs (Gatha / Round)",
+      "Pure Steam-Sterilized Ground Turmeric Powder (Sortex Cleaned, Destoned)",
+      "Turmeric Splits / Industrial Extraction Grade",
+      "Custom / Others (Specify Grade)"
     ],
-    "Red Chilli (Teja S17 / S4 Sannam / Byadgi)": [
-      "Teja S17 Stemless (High Heat 75,000+ SHU)",
-      "S4 Sannam Stemless / With Stem",
-      "Byadgi Whole Chilli (Deep Red, Low Heat ASTA)",
-      "Crushed Chilli Flakes / Coarse Powder",
-      "Custom / Others (Specify)"
+    "Red Chilli & Paprika (Capsicum Annuum)": [
+      "Teja S17 Stemless (High Heat 75,000+ SHU, Bright Red)",
+      "S4 Sannam Stemless / With Stem (Medium Heat 25,000–35,000 SHU)",
+      "Byadgi Whole Chilli (Deep Red ASTA Color 120+, Low Pungency)",
+      "Crushed Chilli Flakes / Pizza Flakes with Seeds (Heat Controlled)",
+      "Kashmiri Whole Chilli & Fine Mild Red Powder",
+      "Custom / Others (Specify Grade)"
     ],
-    "Cumin & Coriander Seeds": [
-      "Singapore Quality Cumin (99% Purity)",
-      "Europe Quality Cumin (99.5% Machine Cleaned)",
-      "Eagle Quality Green Coriander Seeds",
+    "Cumin, Coriander & Fennel Seeds": [
+      "Singapore Quality Whole Cumin (99% Purity, Machine Cleaned)",
+      "Europe Quality Whole Cumin (99.5% Purity, Sortex Cleaned)",
+      "Eagle Quality Green Coriander Whole (Kaveri Basin)",
       "Scooter Quality Coriander Whole",
-      "Custom / Others (Specify)"
+      "Lucknowi Sweet Green Fennel Seeds (Saunf 99%+)",
+      "Custom / Others (Specify Grade)"
     ],
-    "Cloves, Nutmeg & Mace": [
-      "Lal Pari Quality Handpicked Whole Cloves",
-      "Whole Indian Nutmeg with Shell / Without Shell",
-      "Whole Golden Yellow Mace Flowers",
-      "Custom / Others (Specify)"
+    "Whole Plantation Spices (Cloves, Nutmeg, Cinnamon)": [
+      "Lal Pari Quality Handpicked Whole Cloves (Zanzibar / Madagascar Standard)",
+      "Whole Indian Nutmeg with Shell / Shelled (ABCD Grade)",
+      "Golden Yellow Mace Flowers (Whole Flower Blades)",
+      "Ceylon Cinnamon Quills (Alba / C5 Special Export Grade)",
+      "Whole Star Anise (Autumn Crop, 8-Point Intact)",
+      "Green Fenugreek / Methi Seeds (Machine Cleaned)",
+      "Custom / Others (Specify Grade)"
     ]
   },
   "Handcrafts": {
-    "Engraved Wooden Jewelry & Keepsake Boxes": [
-      "Antique Brass Inlay Sheesham Box (10x6x4 in)",
-      "Hand-Carved Floral Rosewood Box (8x5x3 in)",
-      "Velvet Lined Multi-Compartment Keepsake Box",
-      "Custom Laser Engraved / OEM Dimensions"
+    "Traditional Heritage Brassware & Sacred Art": [
+      "Lost-Wax Cast Heritage Brass Temple Idols & Deities",
+      "Traditional Antique Brass Urli Floating Flower Bowls (10–24 inch)",
+      "Handcrafted Peacock Hanging Diya & Temple Oil Lamps",
+      "Carved Brass Pooja Bells, Incense Burners & Trays",
+      "Cast Brass Traditional Heritage Sculptures & Wall Hangings",
+      "Custom / Others (Specify Dimensions & Finish)"
     ],
-    "Handcrafted Teak & Sheesham Kitchen Utilities": [
-      "Teakwood Serving Platter with Brass Handles",
-      "Sheesham Spice Box (9-Compartment Masala Dabba)",
-      "Hand-Turned Wooden Bowls & Salad Servers",
-      "Custom / Others (Specify)"
+    "Hand-Carved Teakwood & Sheesham Keepsake Chests": [
+      "Antique Brass Inlay Sheesham Box (10x6x4 in with Latch)",
+      "Hand-Carved Floral Rosewood Jewelry Box with Velvet Lining",
+      "Hand-Carved Teakwood Decorative Wall Relief Panels",
+      "Multi-Compartment Wooden Keepsake Chest with Secret Lock",
+      "Custom Laser Engraved / OEM Dimensions & Branding"
     ],
-    "Artisanal Brass & Copper Handicrafts": [
-      "Antique Brass Hanging Peacock Diya (Oil Lamp)",
-      "Cast Brass Traditional Heritage Sculptures",
-      "Hammered 100% Pure Copper Water Pitcher & Cups",
-      "Custom / Others (Specify)"
+    "Artisanal Wooden Kitchen Utilities & Tableware": [
+      "Teakwood Serving Platter with Cast Brass Handles",
+      "Sheesham Spice Box (9-Compartment Traditional Masala Dabba)",
+      "Hand-Turned Rosewood Salad Bowls & Server Spoon Pairs",
+      "Handcrafted Wooden Trivets, Coaster Sets & Tissue Holders",
+      "Custom Teak / Acacia Wood Kitchenware"
     ],
-    "Marble & Soapstone Sculpted Decor": [
-      "Pietra Dura Inlay White Marble Coasters & Trivets",
-      "Hand-Carved Soapstone Floral Aroma Burner",
-      "Custom / Others (Specify)"
+    "Architectural Terracotta, Clay Pottery & Planters": [
+      "Hand-Molded Architectural Terracotta Decorative Urns",
+      "Indoor & Outdoor Unglazed Clay Garden Planters",
+      "Traditional Clay Cooking Handi Pots & Water Coolers",
+      "Custom Terracotta Heritage Murals & Relief Pottery"
+    ],
+    "Artisanal Pure Copper & Stone Inlay Decor": [
+      "Hammered 100% Pure Ayurvedic Copper Water Pitcher & Tumbler Sets",
+      "Pietra Dura Inlay White Marble Coasters, Trivets & Platters",
+      "Hand-Carved Soapstone Floral Aroma Oil Burners & Tea-light Holders",
+      "Custom Marble & Copper Artisan Decor"
     ]
   },
   "Textiles": {
-    "100% Combed Cotton T-Shirts & Apparel": [
-      "180 GSM Single Jersey Bio-Washed Combed Cotton",
-      "220 GSM Heavyweight French Terry Oversized",
-      "160 GSM Lightweight Summer Combed Cotton",
-      "Custom OEM Print, Embroidery & Pantone Dye"
+    "100% Combed Cotton T-Shirts & Knitted Apparel": [
+      "180 GSM Single Jersey Bio-Washed Combed Cotton Crewneck",
+      "220 GSM Heavyweight French Terry Oversized Drop-Shoulder Tee",
+      "160 GSM Lightweight Summer Combed Cotton T-Shirt",
+      "240 GSM Pique Knit Polo Shirts with Ribbed Collar",
+      "Custom OEM Screen Print, High-Density Print & Pantone Reactive Dye",
+      "Custom / Others (Specify GSM & Cut)"
     ],
-    "Luxury Terry Bath Towels & Hotel Linen": [
-      "600 GSM Ring-Spun Combed Cotton Bath Towel",
-      "500 GSM Zero-Twist Ultra Plush Hotel Bath Sheet",
+    "Export Terry Bath Towels & Luxury Hotel Linens": [
+      "600 GSM Ring-Spun Combed Cotton Luxury Bath Towel (70x140 cm)",
+      "500 GSM Zero-Twist Ultra Plush Hotel Bath Sheet (90x150 cm)",
       "400 GSM Quick-Dry Pool / Spa Cabana Stripe Towel",
-      "Custom Jacquard Woven Hotel Branding"
+      "Waffle Weave Cotton Bath Robes & Matching Hand Towel Sets",
+      "Custom Jacquard Woven Border & Woven Hotel Brand Label"
     ],
-    "Cotton Kitchen Linen & Eco Canvas Bags": [
-      "Waffle Weave Cotton Kitchen Towels (300 GSM)",
-      "Heavyweight Pure Cotton Canvas Tote Bags (280 GSM)",
-      "Printed Cotton Table Runners & Dining Napkins",
-      "Custom / Others (Specify)"
+    "Luxury Cotton Bedsheets, Duvets & Home Linens": [
+      "300–400 Thread Count (TC) Pure Cotton Sateen Bedsheet Sets",
+      "500–600 TC Egyptian & Indian Long-Staple Cotton Percale Hotel Sheets",
+      "Duvet Covers, Pillow Shams & Fitted Sheet Program",
+      "Woven Cotton Tablecloths, Table Runners & 100% Cotton Dining Napkins",
+      "Custom / Others (Specify TC & Dimensions)"
     ],
-    "Woven Grey Fabric & Knitted Rolls": [
-      "Single Jersey Knitted Fabric Rolls (Raw Greige / Dyed)",
-      "100% Cotton Poplin & Twill Woven Fabric",
-      "Custom / Others (Specify)"
+    "Cotton Kitchen Linens & Heavy Canvas Bags": [
+      "Waffle Weave Pure Cotton Kitchen Dish Towels (300 GSM)",
+      "Heavyweight 100% Cotton Canvas Tote Bags (280–340 GSM)",
+      "Calico / Muslin Drawstring Produce & Storage Bags",
+      "Custom OEM Screen Printed Canvas Merchandise Bags"
+    ],
+    "Woven Grey Fabric Rolls & Knitted Mill Fabrics": [
+      "Single Jersey Knitted Fabric Rolls (Raw Greige & Bio-Polished)",
+      "100% Cotton Poplin, Twill & Oxford Woven Fabric Rolls",
+      "2x2 Rib Knit Collar & Cuff Tubular Rolls",
+      "Custom Yarn-Dyed Checks & Stripes Mill Fabric"
     ]
   },
   "Bamboo": {
-    "Eco-Friendly Bamboo Toothbrushes": [
-      "Adult Wave Charcoal Bristles (BPA-Free Dupont Nylon)",
+    "Eco-Friendly Bamboo Toothbrushes & Dental Sets": [
+      "Adult Wave Charcoal Bristles (BPA-Free DuPont Tynex Nylon)",
       "Child Soft Rounded Nylon-6 Pastel Bristles",
-      "Flat Ergonomic Handle with Laser Engraved Logo",
-      "Custom Retail Kraft Box Packaging"
+      "Flat Ergonomic Handle with Laser Engraved Brand Logo",
+      "Round Cylindrical Handle with 100% Castor Bean Oil Bristles",
+      "Custom Retail Kraft Box Packaging & Travel Bamboo Cases"
     ],
-    "Handcrafted Neem & Bamboo Combs": [
-      "Dual-Tooth Wide Handle Anti-Static Neem Comb",
-      "Pocket Beard & Fine Hair Detangling Comb",
-      "Custom / Others (Specify)"
+    "Handcrafted Neem Wood & Bamboo Grooming Combs": [
+      "Dual-Tooth Wide Handle Anti-Static Pure Neem Comb",
+      "Pocket Beard & Fine Hair Detangling Bamboo Comb",
+      "Bamboo Paddle Hairbrush with Wooden Bristles & Rubber Cushion",
+      "Custom / Others (Specify Model)"
     ],
-    "Bamboo Stationery & Corporate Gifts": [
-      "Bamboo Barrel Ballpoint Pen with Brass Clip",
-      "Spiral Bamboo Hardcover Journal with Recycled Paper",
-      "Custom / Others (Specify)"
+    "Bamboo Corporate Stationery & Executive Gifts": [
+      "Bamboo Barrel Ballpoint Pen with Solid Brass Clip (Refillable)",
+      "Spiral Bamboo Hardcover Journal with Recycled Cotton Paper",
+      "Bamboo Desk Organizer with Wireless Charging Pad Dock",
+      "Custom Laser Engraved Corporate Gift Sets in Kraft Gift Box"
     ],
-    "Bamboo Kitchenware & Travel Cutlery": [
-      "4-Piece Bamboo Cutlery Set with Organic Cotton Pouch",
-      "Solid Bamboo Chopping & Serving Board (ISPM-15)",
-      "Custom / Others (Specify)"
+    "Bamboo Kitchenware, Travel Cutlery & Utility": [
+      "4-Piece Bamboo Cutlery Set (Fork, Knife, Spoon, Straw) in Organic Cotton Pouch",
+      "Solid Bamboo End-Grain Chopping & Serving Board (ISPM-15)",
+      "Reusable Bamboo Drinking Straws with Coir Cleaning Brush",
+      "Bamboo Soap Dishes & Bathroom Storage Racks"
     ]
   },
   "Plastic": {
-    "Industrial HDPE & PP Rigid Containers": [
-      "Food-Grade HDPE Drums & Jerry Cans (5L – 30L)",
-      "Heavy-Duty PP Industrial Stacking Crates & Totes",
-      "Custom Polymer Molded Containers"
+    "Industrial HDPE & PP Rigid Containers & Drums": [
+      "Food-Grade HDPE Drums & Tight-Head Jerry Cans (5L – 30L)",
+      "Heavy-Duty PP Industrial Stacking Crates & Perforated Baskets",
+      "Agricultural Polymer Carboys & Chemical Resistant Bottles",
+      "Heavy-Duty Recycled Plastic Pallets (ISPM-15 Exempt)"
     ],
-    "Commercial Household & Utility Ware": [
-      "Virgin Polymer Multipurpose Bins & Organizers",
-      "Airtight Modular Kitchen Storage Containers",
-      "Custom / Others (Specify)"
+    "Commercial Household, Storage & Utility Ware": [
+      "Virgin Polymer Multipurpose Storage Bins & Modular Organizers",
+      "Airtight Modular Kitchen Food Storage Containers (BPA-Free)",
+      "Food-Grade Microwave-Safe Airtight Tiffin Containers",
+      "Heavy-Duty Commercial Plastic Basins, Buckets & Waste Bins"
     ],
     "Custom Precision Injection Molded Components": [
-      "Custom Tooling Precision Engineering Plastics",
-      "Custom OEM Parts / Specifications"
+      "Custom Tooling Precision Engineering Plastics (POM, PA6, ABS, PC)",
+      "Industrial Polymer Closures, Dispenser Pumps & Screw Caps",
+      "Custom OEM Molded Technical Components"
     ]
   }
 };
+
+// Backwards compatibility & flexible key aliases
+COMMODITY_DATA["Spices & Seasoning"] = COMMODITY_DATA["Spices"];
+COMMODITY_DATA["Handcrafts & Arifacts"] = COMMODITY_DATA["Handcrafts"];
+COMMODITY_DATA["Textiles & Fabrics"] = COMMODITY_DATA["Textiles"];
+COMMODITY_DATA["Bamboo Products"] = COMMODITY_DATA["Bamboo"];
+COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
 
 // ── Initialize Kavri RFQ Engine ──────────────────────────────
 (function initKavriRfq() {
@@ -653,6 +858,8 @@ const COMMODITY_DATA = {
     const company    = (document.getElementById('rfqCompany').value || '').trim();
     const email      = (document.getElementById('rfqEmail').value || '').trim();
     const phone      = (document.getElementById('rfqPhone').value || '').trim();
+    const buyerTypeEl = document.getElementById('rfqBuyerType');
+    const buyerType  = buyerTypeEl ? buyerTypeEl.value : 'Direct Importer';
 
     const line       = lineSelect.value;
     const commodity  = commoditySelect.value;
@@ -691,16 +898,17 @@ const COMMODITY_DATA = {
 📋 *RFQ Ref:* ${refCode}
 👤 *Buyer:* ${fullName}
 🏢 *Company:* ${company}
+💼 *Buyer Type:* ${buyerType}
 📧 *Email:* ${email}
 📞 *Direct / WhatsApp:* ${phone}
 
-📦 *COMMODITY & GRADE SPECIFICATION:*
-• Product Line: ${line}
-• Commodity: ${commodity}
-• Target Grade: ${grade}
-• Volume / Quantity: ${qty} ${qtyUnit}
+📦 *COMMODITY & GRADE SPECIFICATION (KAVRI EXIM STD):*
+• Product Division: ${line}
+• Commodity / Sub-Division: ${commodity}
+• Target Technical Grade: ${grade}
+• Volume / Target Quantity: ${qty} ${qtyUnit}
 
-🚢 *MARITIME DELIVERY & INCOTERMS:*
+🚢 *MARITIME DELIVERY & INCOTERMS 2020:*
 • Commercial Terms: ${incoterm} 2020
 • Port of Loading (POL): ${pol}
 • Destination Country: ${country}
@@ -708,7 +916,7 @@ const COMMODITY_DATA = {
 
 📋 *PACKAGING & SHIPPING TIMELINE:*
 • Packaging Std: ${packaging}
-• Target Sailing: ${schedule}
+• Target Sailing Program: ${schedule}
 • Buyer Instructions: ${notes}
 ━━━━━━━━━━━━━━━━━━━━━━
 ⚡ *Official Proforma Invoice SLA: Within 12 Business Hours*`;
@@ -725,13 +933,13 @@ const COMMODITY_DATA = {
         <div class="rfq-ref-badge">Quotation Reference: ${refCode}</div>
         <h3 style="color: var(--gold-light); font-size: 1.5rem; margin-bottom: 0.5rem;">Export Quotation Request Transmitted</h3>
         <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
-          Thank you, <strong>${fullName}</strong>. Your commercial enquiry has been logged with our international trade desk under Indian Export Regulations (DGFT, APEDA & Spices Board). Our export manager is preparing your freight schedule and container stuffing breakdown.
+          Thank you, <strong>${fullName}</strong>. Your commercial enquiry has been logged with our international trade desk under Indian Export Regulations (DGFT, APEDA & Spices Board). Our export desk is preparing your container stuffing calculations and freight breakdown.
         </p>
 
         <div class="rfq-summary-box">
           <div class="rfq-summary-item">
             <span class="rfq-summary-label">Buyer Entity</span>
-            <span class="rfq-summary-val">${company} (${fullName})</span>
+            <span class="rfq-summary-val">${company} (${buyerType})</span>
           </div>
           <div class="rfq-summary-item">
             <span class="rfq-summary-label">Commodity & Grade</span>
@@ -750,8 +958,8 @@ const COMMODITY_DATA = {
             <span class="rfq-summary-val">${pol}</span>
           </div>
           <div class="rfq-summary-item">
-            <span class="rfq-summary-label">Packaging Std</span>
-            <span class="rfq-summary-val">${packaging}</span>
+            <span class="rfq-summary-label">Packaging & Schedule</span>
+            <span class="rfq-summary-val">${packaging} · ${schedule}</span>
           </div>
         </div>
 
