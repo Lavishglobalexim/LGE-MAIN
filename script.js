@@ -239,11 +239,11 @@ document.querySelectorAll('.product-card').forEach(card => {
 
 
 /* ============================================================
-   KAVRI EXIM STYLE COMPREHENSIVE RFQ SYSTEM & SEAPORT ENGINE
-   Exact Data Extraction from KavriExim.com (Gt & Bt Catalog)
+   LAVISH GLOBAL EXIM RFQ SYSTEM & SEAPORT ENGINE
+   Global Seaport Directory & Commodity Grade Specifications
    ============================================================ */
 
-// 1. Destination Country to Exact Discharge Seaport UN/LOCODE Directory (Exact Kavri Exim Reference)
+// 1. Destination Country to Exact Discharge Seaport UN/LOCODE Directory
 const DESTINATION_PORTS = {
   "USA": [
     "New York / New Jersey (USNYC)",
@@ -477,7 +477,7 @@ const DESTINATION_PORTS = {
   ]
 };
 
-// 2. Product Line Cascades: Commodities and Target Grade Specifications (Exact Kavri Exim Bt Catalog)
+// 2. Product Line Cascades: Commodities and Target Grade Specifications
 const COMMODITY_DATA = {
   "Spices": {
     "Alleppey Green Cardamom (Small Cardamom)": [
@@ -657,8 +657,8 @@ COMMODITY_DATA["Textiles & Fabrics"] = COMMODITY_DATA["Textiles"];
 COMMODITY_DATA["Bamboo Products"] = COMMODITY_DATA["Bamboo"];
 COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
 
-// ── Initialize Kavri RFQ Engine ──────────────────────────────
-(function initKavriRfq() {
+// ── Initialize RFQ Engine ──────────────────────────────
+(function initLavishRfq() {
   const lineSelect       = document.getElementById('rfqProductLine');
   const commoditySelect  = document.getElementById('rfqCommodity');
   const gradeSelect      = document.getElementById('rfqGrade');
@@ -893,33 +893,33 @@ COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
 
     // Build WhatsApp Pre-filled payload
     const waText = 
-`🌟 *LAVISH GLOBAL EXIM — COMMERCIAL EXPORT RFQ*
+`*LAVISH GLOBAL EXIM — COMMERCIAL EXPORT RFQ*
 ━━━━━━━━━━━━━━━━━━━━━━
-📋 *RFQ Ref:* ${refCode}
-👤 *Buyer:* ${fullName}
-🏢 *Company:* ${company}
-💼 *Buyer Type:* ${buyerType}
-📧 *Email:* ${email}
-📞 *Direct / WhatsApp:* ${phone}
+*RFQ Ref:* ${refCode}
+*Buyer:* ${fullName}
+*Company:* ${company}
+*Buyer Type:* ${buyerType}
+*Email:* ${email}
+*Direct / WhatsApp:* ${phone}
 
-📦 *COMMODITY & GRADE SPECIFICATION (KAVRI EXIM STD):*
+*COMMODITY & GRADE SPECIFICATION:*
 • Product Division: ${line}
 • Commodity / Sub-Division: ${commodity}
 • Target Technical Grade: ${grade}
 • Volume / Target Quantity: ${qty} ${qtyUnit}
 
-🚢 *MARITIME DELIVERY & INCOTERMS 2020:*
+*MARITIME DELIVERY & INCOTERMS 2020:*
 • Commercial Terms: ${incoterm} 2020
 • Port of Loading (POL): ${pol}
 • Destination Country: ${country}
 • Port of Discharge (POD): ${port}
 
-📋 *PACKAGING & SHIPPING TIMELINE:*
-• Packaging Std: ${packaging}
+*PACKAGING & SHIPPING TIMELINE:*
+• Packaging: ${packaging}
 • Target Sailing Program: ${schedule}
 • Buyer Instructions: ${notes}
 ━━━━━━━━━━━━━━━━━━━━━━
-⚡ *Official Proforma Invoice SLA: Within 12 Business Hours*`;
+*Official Proforma Invoice SLA: Within 12 Business Hours*`;
 
     const waEncoded = encodeURIComponent(waText);
     const waLink = `https://wa.me/917448580888?text=${waEncoded}`;
@@ -929,10 +929,10 @@ COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
       rfqForm.style.display = 'none';
 
       rfqSuccessWrap.innerHTML = `
-        <span class="success-icon">🚢</span>
+        <span class="success-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="stroke: #D4AF37;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
         <div class="rfq-ref-badge">Quotation Reference: ${refCode}</div>
-        <h3 style="color: var(--gold-light); font-size: 1.5rem; margin-bottom: 0.5rem;">Export Quotation Request Transmitted</h3>
-        <p style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
+        <h3 style="color: var(--gold-bright); font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 700;">Export Quotation Request Transmitted</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.25rem;">
           Thank you, <strong>${fullName}</strong>. Your commercial enquiry has been logged with our international trade desk under Indian Export Regulations (DGFT, APEDA & Spices Board). Our export desk is preparing your container stuffing calculations and freight breakdown.
         </p>
 
@@ -965,13 +965,13 @@ COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
 
         <div style="margin: 1.5rem 0 1rem;">
           <a href="${waLink}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-rfq">
-            <span>💬 Send Direct via WhatsApp Trade Desk</span>
+            <span>Send Direct via WhatsApp Trade Desk</span>
             <span>→</span>
           </a>
         </div>
 
-        <p style="font-size: 0.8rem; color: #94a3b8; margin-top: 0.75rem;">
-          ⚡ Proforma Invoice, container stuffing calculations and official FOB/CIF freight rates are issued within <strong>12 business hours</strong>.
+        <p style="font-size: 0.8rem; color: var(--text-lavender); margin-top: 0.75rem;">
+          Official Proforma Invoices with container stuffing calculations and freight breakdowns are dispatched within <strong>12 business hours</strong>.
         </p>
 
         <button type="button" id="rfqResetBtn" class="btn btn-outline" style="margin-top: 1.25rem; font-size: 0.85rem; padding: 0.6rem 1.4rem;">
