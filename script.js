@@ -480,12 +480,12 @@ const DESTINATION_PORTS = {
 // 2. Product Line Cascades: Commodities and Target Grade Specifications
 const COMMODITY_DATA = {
   "Spices": {
-    "Alleppey Green Cardamom (Small Cardamom)": [
-      "AGSEB — Alleppey Green Special Extra Bold (8.5mm+)",
-      "AGEB — Alleppey Green Extra Bold (8.0mm+)",
-      "AGB — Alleppey Green Bold (7.5mm - 8.0mm)",
-      "AGS — Alleppey Green Superior (7.0mm - 7.5mm)",
-      "AGL — Alleppey Green Shipment / Light",
+    "Idukki Green Cardamom (Small Cardamom)": [
+      "AGSEB — Idukki Green Special Extra Bold (8.5mm+)",
+      "AGEB — Idukki Green Extra Bold (8.0mm+)",
+      "AGB — Idukki Green Bold (7.5mm - 8.0mm)",
+      "AGS — Idukki Green Superior (7.0mm - 7.5mm)",
+      "AGL — Idukki Green Shipment / Light",
       "CS — Decorticated Cardamom Seeds",
       "Others (Specify Custom Grade)"
     ],
@@ -1003,5 +1003,89 @@ COMMODITY_DATA["Plastics Things"] = COMMODITY_DATA["Plastic"];
         });
       }
     }, 900);
+  });
+})();
+
+// ── Careers Application Form Engine ──────────────────────────
+(function initCareerForm() {
+  const careerForm = document.getElementById('careerForm');
+  const careerSuccessWrap = document.getElementById('careerSuccessWrap');
+  if (!careerForm) return;
+
+  careerForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = (document.getElementById('careerName') ? document.getElementById('careerName').value : '').trim();
+    const email = (document.getElementById('careerEmail') ? document.getElementById('careerEmail').value : '').trim();
+    const phone = (document.getElementById('careerPhone') ? document.getElementById('careerPhone').value : '').trim();
+    const position = (document.getElementById('careerPosition') ? document.getElementById('careerPosition').value : '').trim();
+    const exp = (document.getElementById('careerExp') ? document.getElementById('careerExp').value : '').trim();
+    const location = (document.getElementById('careerLocation') ? document.getElementById('careerLocation').value : '').trim();
+    const linkedin = (document.getElementById('careerLinkedin') ? document.getElementById('careerLinkedin').value : '').trim();
+    const note = (document.getElementById('careerNote') ? document.getElementById('careerNote').value : '').trim();
+
+    const cvInput = document.getElementById('careerCV');
+    const cvFile = cvInput && cvInput.files && cvInput.files[0] ? cvInput.files[0] : null;
+    const cvFileName = cvFile ? cvFile.name : 'CV_Resume.pdf';
+    const cvFileSize = cvFile ? `(${(cvFile.size / 1024).toFixed(1)} KB)` : '';
+
+    const submitBtn = careerForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Uploading CV & Submitting Dossier...</span>';
+    }
+
+    setTimeout(() => {
+      careerForm.style.display = 'none';
+
+      const waMsg = `*LAVISH GLOBAL EXIM — CAREER APPLICATION*%0A%0A` +
+        `*Candidate:* ${encodeURIComponent(name)}%0A` +
+        `*Role Applied:* ${encodeURIComponent(position)}%0A` +
+        `*Phone:* ${encodeURIComponent(phone)}%0A` +
+        `*Email:* ${encodeURIComponent(email)}%0A` +
+        `*Experience:* ${encodeURIComponent(exp)}%0A` +
+        `*Location:* ${encodeURIComponent(location)}%0A` +
+        `*CV Document:* ${encodeURIComponent(cvFileName)} ${encodeURIComponent(cvFileSize)}%0A` +
+        (linkedin ? `*LinkedIn:* ${encodeURIComponent(linkedin)}%0A` : '') +
+        (note ? `*Brief Bio:* ${encodeURIComponent(note)}%0A` : '');
+
+      const waUrl = `https://wa.me/917448580888?text=${waMsg}`;
+      const emailBody = `Dear HR & Talent Desk,%0D%0A%0D%0A` +
+        `I am applying for the role of ${encodeURIComponent(position)} at Lavish Global EXIM.%0D%0A%0D%0A` +
+        `CANDIDATE DETAILS:%0D%0A` +
+        `Name: ${encodeURIComponent(name)}%0D%0A` +
+        `Phone: ${encodeURIComponent(phone)}%0D%0A` +
+        `Email: ${encodeURIComponent(email)}%0D%0A` +
+        `Role: ${encodeURIComponent(position)}%0D%0A` +
+        `Experience: ${encodeURIComponent(exp)}%0D%0A` +
+        `Current Location: ${encodeURIComponent(location)}%0D%0A` +
+        (linkedin ? `LinkedIn: ${encodeURIComponent(linkedin)}%0D%0A` : '') +
+        `CV Document File: ${encodeURIComponent(cvFileName)} ${encodeURIComponent(cvFileSize)}%0D%0A%0D%0A` +
+        `Cover Bio:%0D%0A${encodeURIComponent(note)}%0D%0A%0D%0A` +
+        `*Note: Attached CV document file (${encodeURIComponent(cvFileName)}) for your review.`;
+
+      const mailtoUrl = `mailto:careers@lavishglobal.com?subject=${encodeURIComponent('Job Application: ' + position + ' - ' + name)}&body=${emailBody}`;
+
+      if (careerSuccessWrap) {
+        careerSuccessWrap.innerHTML = `
+          <div style="background: rgba(42, 8, 69, 0.95); border: 1px solid var(--gold-border); border-radius: 16px; padding: 32px; text-align: center;">
+            <div style="width: 58px; height: 58px; margin: 0 auto 16px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-metallic), var(--gold-bright)); display: flex; align-items: center; justify-content: center; color: #1e062b; font-size: 26px; font-weight: bold;">✓</div>
+            <h3 style="color: var(--gold-bright); margin-bottom: 10px; font-size: 1.4rem;">Application Dossier Transmitted</h3>
+            <p style="color: #e2e8f0; font-size: 0.98rem; margin-bottom: 12px; line-height: 1.6;">Thank you, <strong>${name}</strong>. Your candidate file for <strong>${position}</strong> has been logged with our Talent Desk.</p>
+            <div style="display: inline-block; background: rgba(95, 41, 135, 0.4); border: 1px dashed var(--gold-border); padding: 8px 16px; border-radius: 8px; margin-bottom: 20px; color: var(--gold-champagne); font-size: 0.9rem;">
+              📎 Uploaded CV: <strong>${cvFileName}</strong> ${cvFileSize}
+            </div>
+            <p style="color: #cbd5e1; font-size: 0.88rem; margin-bottom: 22px; max-width: 540px; margin-left: auto; margin-right: auto;">
+              Click below to send your application dossier and attach your CV directly to <strong>careers@lavishglobal.com</strong> or notify our HR desk on WhatsApp.
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+              <a href="${mailtoUrl}" class="btn btn-primary" style="padding: 12px 24px;"><span>Email CV to careers@lavishglobal.com</span></a>
+              <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 12px 24px;"><span>Notify HR on WhatsApp</span></a>
+            </div>
+          </div>
+        `;
+        careerSuccessWrap.style.display = 'block';
+      }
+    }, 700);
   });
 })();
